@@ -1,0 +1,8 @@
+@CHARSET "utf-8";
+
+.center {text-align: center; color: red;}
+p{color: blue; text-align: center;}
+h1{background-color: yellow; border: 2px solid; text-align: center;}
+h3{color: pink;text-align: right;}
+#para1{text-align:right; color:red;}
+#text1{font-weight: bold;}

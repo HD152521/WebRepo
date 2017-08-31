@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>event</title>
+<script>
+function changeColor(color){
+	console.log(color);
+	var c =document.getElementById("container");
+	c.style.backgroundColor=color;
+	
+}
+function toUpperCase(e){
+  // var  w = document.getElementById("word");
+	e.value=w.value.toUpperCase();s
+}
+
+function addBorder(){
+	var x = document.getElementById("box");
+	x.style.border="3px solid red";
+}
+
+function removeBorder(){
+	var x = document.getElementById("box");
+	x.style.border="";
+}
+
+</script>
+</head>
+<body onload="alert('웹 페이지 로딩됨');">
+
+<div id="container">
+
+<input type ="radio" name ="color" onclick="changeColor('yellow');">노랑
+<input type ="radio" name ="color" onclick="changeColor('blue');">파랑
+<input type ="radio" name ="color" onclick="changeColor('white');">흰색
+<br>
+<input type="text" id="word" onchange="toUpperCase(this);">
+<br>
+<div id="box"  onmouseover="addBorder();" onmouseout="removeBorder();">마우스를 위에 올려보세요
+</div>
+</div>
+
+</body>
+
+</html>
