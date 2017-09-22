@@ -1,0 +1,10 @@
+@CHARSET "EUC-KR";
+.navbar {
+	position: fixed;
+}
+
+.jumbotron {
+	margin: 0;
+	height: 1080px;
+	background: url('../image/sky.jpg') no-repeat center;
+}
