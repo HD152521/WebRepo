@@ -63,12 +63,12 @@ public class BlogLoginServlet extends HttpServlet {
 
 			session.setAttribute("user", user);
 
-			RequestDispatcher rd = request.getRequestDispatcher("/jsp/test.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/myblog/blog.jsp");
 			rd.forward(request, response);
 		}
 		else{
 			request.setAttribute("msg", "error");
-			RequestDispatcher rd = request.getRequestDispatcher("/jsp/login.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/myblog/login.jsp");
 			rd.forward(request, response);
 		}
 	}
