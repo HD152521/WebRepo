@@ -6,5 +6,5 @@
 .jumbotron {
 	margin: 0;
 	height: 1080px;
-	background: url('../image/sky.jpg') no-repeat center;
+	background: url('/WebClass/image/sky.jpg') no-repeat center;
 }

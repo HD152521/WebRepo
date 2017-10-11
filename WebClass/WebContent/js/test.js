@@ -42,7 +42,7 @@
 								console.log(Username);
 
 								//서버로 post 전송
-								$.post("/WebClass/Login", {
+								$.post("/WebClass/boglogin", {
 									"Username" : Username,
 								}, function(data) {
 									//alert(data.form.id+"님 로그인 되었습니다.	");

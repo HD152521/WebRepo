@@ -1,5 +1,11 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+
+<%@
+	page import="org.dimigo.vo.UserVO"%>
 
 <!DOCTYPE html>
+<html lang="ko">
 <html>
 <head>
 <meta charset="utf-8">
@@ -11,11 +17,22 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
 	integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M"
 	crossorigin="anonymous">
+<link rel="stylesheet" href="/WebClass/css/footer.css">
+<link rel="stylesheet" href="/WebClass/css/test.css">
+
+<script>
+	function menu_over(e) {
+		e.setAttribute("class", "nav-item active");
+	}
+	function menu_out(e) {
+		e.setAttribute("class", "nav-item");
+	}
+</script>
+
 <title>Insert title here</title>
-<link rel="stylesheet" type="text/css" href="../css/test.css">
+<link rel="stylesheet" type="text/css" href="/WebClass/css/test.css">
 <script type="text/javascript" src="../js/test1.js"></script>
 </head>
-
 <body>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark"
 		style="width: 100%;">
@@ -28,28 +45,41 @@
 		</button>
 
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			<ul class="navbar-nav mr-auto">
-				<li class="nav-item" onmouseover="menu_over(this);"
-					onmouseout="menu_out(this);"><a class="nav-link" href="#menu1">나의
-						소개<span class="sr-only">(current)</span>
-				</a></li>
-				<li class="nav-item" onmouseover="menu_over(this);"
-					onmouseout="menu_out(this);"><a class="nav-link" href="#menu2">좋아하는
-						것</a></li>
-				<li class="nav-item" onmouseover="menu_over(this);"
-					onmouseout="menu_out(this);"><a class="nav-link disabled"
-					href="#menu3">버킷리스트</a></li>
+			<%@ include file="menu.jsp"%>
+			<%
+				UserVO user = (UserVO) session.getAttribute("user");
+				if (user == null) {
+			%>
+			<%-- 세션이 없는 경우 --%>
+			<a class="text-bold text-white" style="text-decoration: none"
+				href="/WebClass/jsp/login.jsp">Sign in</a> <span
+				class="text-bold text-white">&nbsp; or &nbsp;</span> <a
+				class="text-bold text-white" style="text-decoration: none"
+				href="/WebClass/jsp/signup.jsp">Sign up</a>
+
+			<%
+				} else {
+			%>
+			<%-- 세션이 있는 경우 --%>
+			<ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
+				<li class="nav-item dropdown"><a
+					class="nav-item nav-link dropdown-toggle mr-md-2" href="#"
+					id="bd-versions" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="false"> <%=user.getName() + "님"%>
+				</a>
+					<div class="dropdown-menu dropdown-menu-right"
+						aria-labelledby="bd-versions">
+						<form action="/WebClass/bloglogout" method="post">
+							<button type="submit" class="dropdown-item">Sign out</button>
+						</form>
+						<div class="dropdown-divider"></div>
+						<button type="button" class="dropdown-item">Action1</button>
+						<button type="button" class="dropdown-item">Action2</button>
+					</div></li>
 			</ul>
-			<form class="form-inline my-2 my-lg-0" id="loginForm">
-				<input class="form-control mr-sm-2" style="" placeholder="ID"
-					aria-label="ID" id="id" required> <input
-					class="form-control mr-sm-2" type="password" placeholder="PWD"
-					aria-label="PWD" id="pwd" required>
-				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">LOG
-					IN</button>
-				<button type="button" class="btn btn-outline-success my-2 my-sm-0"
-					onclick="location.href='#h'" style="margin-left: 10px;">회원가입</button>
-			</form>
+			<%
+				}
+			%>
 		</div>
 	</nav>
 
@@ -82,6 +112,8 @@
 	</div>
 	<!-- Optional JavaScript -->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<%@ include file="footer.jsp"%>
+
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"
@@ -95,7 +127,7 @@
 	<div id="menu1" style="background-color: white; height: 1080px">
 		.
 		<div>
-			<img src="../image/dimigo.jpg"
+			<img src="/WebClass/image/dimigo.jpg"
 				alt="Relevant textual alternative to the image" width="1800"
 				height="600" style="padding-left: 150px; padding-top: 80px">
 		</div>
@@ -122,7 +154,6 @@
 	</div>
 	<div style="background-color: white; height: 1080px" id="menu2">
 		.
-
 		<div class="container" style="margin-top: 55px;">
 			<div id="carouselExampleIndicators" class="carousel slide"
 				data-ride="carousel">
@@ -137,21 +168,21 @@
 						<a
 							href="https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=%EB%B0%95%EB%B3%B4%EC%98%81&oquery=%EB%B0%95%EB%B3%B4%EC%96%91&tqi=TkvCHdpVuE0sstpohnRsssssszZ-045779"
 							target="_blank"> <img class="d-block w-100"
-							src="../image/1.jpg" alt="First slide">
+							src="/WebClass/image/1.jpg" alt="First slide">
 							<div class="carousel-caption d-none d-md-block">
 								<h3>좋아하는 연예인</h3>
 							</div>
 						</a>
 					</div>
 					<div class="carousel-item">
-						<img class="d-block w-100" src="../image/boad.jpg"
+						<img class="d-block w-100" src="/WebClass/image/boad.jpg"
 							alt="Second slide">
 						<div class="carousel-caption d-none d-md-block">
 							<h3>종아하는 운동</h3>
 						</div>
 					</div>
 					<div class="carousel-item">
-						<img class="d-block w-100" src="../image/food.jpg"
+						<img class="d-block w-100" src="/WebClass/image/food.jpg"
 							alt="Third slide">
 						<div class="carousel-caption d-none d-md-block">
 							<h3>종아하는 음식</h3>
@@ -172,7 +203,7 @@
 		</div>
 
 		<div
-			style="margin-top: 0px; margin-left: 50px;margin-top: 50px; display: inline-block;">
+			style="margin-top: 0px; margin-left: 50px; margin-top: 50px; display: inline-block;">
 			<h3 style="color: black">박보영</h3>
 			<h5 style="color: black">
 				박보영을 무척이나 좋아한다.<br>사실 좋아하게 된지는 1년이 <br>조금 안됬지만 박보영이 나온<br>
@@ -183,15 +214,20 @@
 			style="margin-left: 300px; margin-bottom: 300px; display: inline-block;">
 			<h3 style="color: black">수상보드</h3>
 			<h5 style="color: black">
-				제작년에 수상보드를 처음타게 되었다.<br>지금 기억하기로 수상보드를 타고<br>물위를 달리는 기분은 정말 끝내줬다.
-				<br>차안에서 바람을 가르며 고속도로를<br> 달리는 것과 또 다른기분이다.<br>그런 기분 때문에 수상보드를 <br>계속 타게 되는것 같다.</h5>
+				제작년에 수상보드를 처음타게 되었다.<br>지금 기억하기로 수상보드를 타고<br>물위를 달리는 기분은
+				정말 끝내줬다. <br>차안에서 바람을 가르며 고속도로를<br> 달리는 것과 또 다른기분이다.<br>그런
+				기분 때문에 수상보드를 <br>계속 타게 되는것 같다.
+			</h5>
 		</div>
 
 		<div
 			style="margin-left: 300px; margin-bottom: 300px; display: inline-block;">
 			<h3 style="color: black">음식</h3>
 			<h5 style="color: black">
-			왠만한 음식은 다 먹을 수 있다. <br>근데 고기류를 제일 좋아한다. <br>그 중에서도 특히 소고기를 좋아한다. <br>밥을 같이먹고 싶은 사람은 <br>항상 나를 불러 <br>단, 밥은 부름사람이<br> 사주는 걸로 하자 ㅎㅎ</h5>
+				왠만한 음식은 다 먹을 수 있다. <br>근데 고기류를 제일 좋아한다. <br>그 중에서도 특히 소고기를
+				좋아한다. <br>밥을 같이먹고 싶은 사람은 <br>항상 나를 불러 <br>단, 밥은 부름사람이<br>
+				사주는 걸로 하자 ㅎㅎ
+			</h5>
 		</div>
 
 	</div>
@@ -202,7 +238,8 @@
 		<div
 			style="margin-top: 300px; margin-left: 100px; display: inline-block;">
 			<div class="card" style="width: 22rem; height: 24rem;">
-				<img class="card-img-top" src="../image/1.jpg" alt="Card image cap">
+				<img class="card-img-top" src="/WebClass/image/1.jpg"
+					alt="Card image cap">
 				<div class="card-body">
 					<h4 class="card-title">박모영 실물로 보기</h4>
 					<p class="card-text">항상 티비로만 보던 박보영을 실제로 티비가 아닌 실물로 보기</p>
@@ -215,7 +252,8 @@
 		<div
 			style="margin-left: 100px; display: inline-block; margin-bottom: 50px;">
 			<div class="card" style="width: 22rem; height: 23.5rem">
-				<img class="card-img-top" src="../image/1.jpg" alt="Card image cap">
+				<img class="card-img-top" src="/WebClass/image/1.jpg"
+					alt="Card image cap">
 				<div class="card-body">
 					<h4 class="card-title">세계일주하기</h4>
 					<p class="card-text">어릴때 부터 꼭 해보고 싶었던 것 중 하나, 금수저가 아니더라도 꼭 할
@@ -227,8 +265,8 @@
 		</div>
 
 		<div style="margin-left: 100px; display: inline-block;">
-			<div class="card" style="width: 22rem; height:24rem;">
-				<img class="card-img-top" src="../image/space.jpg"
+			<div class="card" style="width: 22rem; height: 24rem;">
+				<img class="card-img-top" src="/WebClass/image/space.jpg"
 					alt="Card image cap" height="185">
 				<div class="card-body">
 					<h4 class="card-title">우주 여행</h4>
@@ -243,7 +281,7 @@
 
 		<div style="margin-left: 100px; display: inline-block;">
 			<div class="card" style="width: 22rem; height: 24rem;">
-				<img class="card-img-top" src="../image/shoes.jpg"
+				<img class="card-img-top" src="/WebClass/image/shoes.jpg"
 					alt="Card image cap" height="180">
 				<div class="card-body">
 					<h4 class="card-title">아무 걱정 없이 쇼핑</h4>
@@ -254,54 +292,7 @@
 
 	</div>
 
-	<div style="background-color: gray; height: 960px; padding-top: 120px;"
-		id="h">
-		<form id="Form">
-			<div class="container" style="padding-top: 30px;">
-				<div class="input-group" style="padding-top: 50px;">
-					<span class="input-group-addon">ID</span> <input type="text"
-						class="form-control" placeholder="id" aria-label="id1" id="id1"
-						aria-describedby="basic-addon1" required>
-				</div>
-				<div class="input-group" style="padding-top: 50px;">
-					<span class="input-group-addon">PWD</span> <input type="password"
-						class="form-control" placeholder="pwd" aria-label="pwd1" id="pwd1"
-						aria-describedby="basic-addon1" required>
-				</div>
-				<div class="input-group" style="padding-top: 50px;">
-					<span class="input-group-addon">이름</span> <input type="text"
-						class="form-control" placeholder="Username" aria-label="Username"
-						id="Username" aria-describedby="basic-addon1" required>
-				</div>
-				<div class="input-group" style="padding-top: 50px;">
-					<span class="input-group-addon">번호</span> <input type="text"
-						class="form-control" placeholder="Number" aria-label="Number"
-						id="number" aria-describedby="basic-addon1" required>
-				</div>
-				<br> <input type="radio" name="grade" value="1" required>1학년
-				<input type="radio" name="grade" value="2" required>2학년 <input
-					type="radio" name="grade" value="3" required>3학년 <br>
-				<br> <select class="custom-select" required>
-					<option value="">Open this select menu</option>
-					<option value="1">1</option>
-					<option value="2">2</option>
-					<option value="3">3</option>
-					<option value="4">4</option>
-					<option value="5">5</option>
-					<option value="6">6</option>
-				</select>
-				<div class="input-group">
-					<span class="input-group-addon" id="basic-addon1">반</span>
-				</div>
-
-				<div style="padding-top: 100px; padding-left: 1000px;">
-					<button type="submit">회원 가입</button>
-				</div>
-			</div>
-		</form>
-	</div>
-
-	<script type="text/javascript" src="../js/test.js"></script>
+	<script type="text/javascript" src="/WebClass/js/test.js"></script>
 
 </body>
 </html>

@@ -1,28 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
-<%@
-	page import="org.dimigo.vo.UserVO"%>
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="utf-8">
+<!-- Required meta tags -->
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Home</title>
+<title>Bootstrap</title>
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="../css/footer.css">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
 	integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M"
 	crossorigin="anonymous">
-<link rel="stylesheet" href="/WebClass/css/footer.css">
-<style>
-div.container {
-	padding-top: 30px;
-	padding-bottom: 20px;
-}
-</style>
-
 <script>
 	function menu_over(e) {
 		e.setAttribute("class", "nav-item active");
@@ -33,7 +23,6 @@ div.container {
 </script>
 </head>
 <body>
-
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 		<a class="navbar-brand" href="#">Home</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -42,47 +31,20 @@ div.container {
 			aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
-
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<%@ include file="menu.jsp"%>
-			<%
-				UserVO user = (UserVO) session.getAttribute("user");
-				if (user == null) {
-			%>
-			<%-- 세션이 없는 경우 --%>
-			<a class="text-bold text-white" style="text-decoration: none"
-				href="/WebClass/jsp/login.jsp">Sign in</a> <span
-				class="text-bold text-white">&nbsp; or &nbsp;</span> <a
-				class="text-bold text-white" style="text-decoration: none"
-				href="/WebClass/jsp/signup.jsp">Sign up</a>
-
-			<%
-				} else {
-			%>
-			<%-- 세션이 있는 경우 --%>
-			<ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
-				<li class="nav-item dropdown"><a
-					class="nav-item nav-link dropdown-toggle mr-md-2" href="#"
-					id="bd-versions" data-toggle="dropdown" aria-haspopup="true"
-					aria-expanded="false"> <%=user.getName() + "님"%>
-				</a>
-					<div class="dropdown-menu dropdown-menu-right"
-						aria-labelledby="bd-versions">
-						<form action="/WebClass/logout" method="post">
-							<button type="submit" class="dropdown-item">Sign out</button>
-						</form>
-						<div class="dropdown-divider"></div>
-						<button type="button" class="dropdown-item">Action1</button>
-						<button type="button" class="dropdown-item">Action2</button>
-					</div></li>
-			</ul>
-			<%
-				}
-			%>
+			<form id="LoginForm" class="form-inline my-2 my-lg-0">
+				<input class="form-control mr-sm-2" type="text" placeholder="ID"
+					aria-label="ID" id="id" required> <input
+					class="form-control mr-sm-2" type="password" placeholder="PWD"
+					aria-label="PWD" id="pwd" required>
+				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
+			</form>
 		</div>
 	</nav>
-	<div class="container">
-		<h1>Hello, Bootstrap</h1>
+
+	<div class="bodyCon">
+		<h1>Hello, world!</h1>
 		<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
 			Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque
 			penatibus et magnis dis parturient montes, nascetur ridiculus mus.
@@ -108,7 +70,10 @@ div.container {
 
 	<%@ include file="footer.jsp"%>
 
-	<!-- Bootstrap js -->
+	<%@ include file="modal.jsp"%>
+
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"
@@ -118,6 +83,37 @@ div.container {
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"
 		integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1"
 		crossorigin="anonymous"></script>
+
+	<script>
+		$(document).ready(function() {
+			$("#LoginForm").submit(function() {
+				// submit이 자동으로 되는 기능을 막기
+				event.preventDefault();
+
+				// id, pwd를 가져오기
+				var id = $("#id").val();
+				var pwd = $("#pwd").val();
+				console.log("id : " + id + "\npwd : " + pwd);
+
+				// 서버로 post 전송 (ajax)
+				$.post("/LoginServlet", {
+					"id" : id,
+					"pwd" : pwd
+				}, function(data) {
+					//                        alert(data.form.id + '님 로그인되었습니다.');
+					var myModal = $('#myModal');
+					myModal.modal();
+					myModal.find('.modal-body').text(data.id + '님 로그인되었습니다.');
+				}); // post방식으로 저 사이트에 post를 보내는데 json형식으로 입력한 값이 들어감
+
+			});
+		});
+
+		// 간단하게 쓰기
+		$(function() {
+
+		});
+	</script>
 
 </body>
 </html>
