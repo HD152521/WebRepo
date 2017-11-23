@@ -12,12 +12,12 @@
 <body>
 <div class="container">
 
-	<%
-		String id = request.getParameter("id") == null ? "" : request.getParameter("id");
-		String pwd = request.getParameter("pwd") == null ? "" : request.getParameter("pwd");
-	%>
+  <%
+  	String id = (request.getParameter("id") == null) ? "" : (String) request.getParameter("id");
+  	String pwd = (request.getParameter("pwd") == null) ? "" : (String) request.getParameter("pwd");
+  %>
 
-  <form class="form-signin" action="/WebClass/bloglogin" method="post">
+  <form class="form-signin" action="/WebClass/login" method="post">
     <h2 class="form-signin-heading">Please sign in</h2>
     
     <label for="inputEmail" class="sr-only">Email address</label>
@@ -40,17 +40,16 @@
 <script>
 	<%-- 로그인이 실패한 경우 처리 추가 --%>
 	<%
-		if("error".equals(request.getAttribute("msg"))){
-			%>
-		var myModal = $('#myModal');
-		myModal.modal();
-		myModal.find('.modal-title').text("Login Error");
-		myModal.find('.modal-body').text("Invalid username or password");
-		<%
-		}
-%>
+		if ("error".equals(request.getAttribute("msg"))) {
+	%>
+	
+	var myModal = $('#myModal');
+	myModal.find('.modal-title').text('Login Error');
+	myModal.find('.modal-body').text('Invalid username or password');
+	myModal.modal();
+	
+	<% } %>
 </script>
-
 
 </body>
 </html>

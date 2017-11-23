@@ -10,24 +10,32 @@
 <link rel="stylesheet" href="/WebClass/css/signin.css">
 </head>
 <body>
+
+<%
+  	String id = (request.getParameter("id") == null) ? "" : (String)request.getParameter("id");
+  	String pwd = (request.getParameter("pwd") == null) ? "" : (String)request.getParameter("pwd");
+  	String name = (request.getParameter("name") == null) ? "" : (String)request.getParameter("name");
+  	String nickname = (request.getParameter("nickname") == null) ? "" : (String)request.getParameter("nickname");
+%>
+
 <div class="container">
 
-  <form id="signupForm" class="form-signin">
+  <form id="signupForm" class="form-signin" action="/WebClass/signup" method="post">
     <h2 class="form-signin-heading">Please sign up</h2>
-    
+        
     <label for="inputEmail" class="sr-only">Email address</label>
-    <input type="email" name="id" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+    <input value='<%= id %>' type="email" name="id" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
     
     <label for="inputPassword" class="sr-only">Password</label>
-    <input type="password" name="pwd" id="inputPassword" class="form-control" placeholder="Password" required>
+    <input value='<%= pwd %>' type="password" name="pwd" id="inputPassword" class="form-control" placeholder="Password" required>
 	
 	<label for="inputName" class="sr-only">Name</label>
-    <input type="text" name="name" id="inputName" class="form-control" placeholder="Name" required>
+    <input value='<%= name %>' type="text" name="name" id="inputName" class="form-control" placeholder="Name" required>
 	
 	<label for="inputNickName" class="sr-only">Nick Name</label>
-    <input type="text" name="nickname" id="inputNickName" class="form-control" placeholder="Nickname" required>
+    <input value='<%= nickname %>' type="text" name="nickname" id="inputNickName" class="form-control" placeholder="Nickname" required>
     <br>
-    <button class="btn btn-lg btn-primary btn-block" type="submit"> Sign up</button>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
   </form>
 </div>
 
@@ -38,43 +46,15 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
 
 <script>
-
-$(document).ready(function() {
-	$("#signupForm").submit(function() {
-		// submit이 자동으로 되는 기능을 막기
-		event.preventDefault();
-
-		// id, pwd를 가져오기
-		var id = $("#id").val();
-		var pwd = $("#pwd").val();
-		var name = $("#name").val();
-		var nickname = $("#nickname").val();
-		
-		// 서버로 post 전송 (ajax)
-		$.post("/WebClass/signup", {
-			"id" : id,
-			"pwd" : pwd,
-			"name" : name,
-			"nickname" : nickname
-		}, function(data) {
-			if(data.error=="yes"){
-			var myModal = $('#myModal');
-			myModal.find('.modal-title').text('Sign Up Error');
-			myModal.find('.modal-body').text('회원 가입 시 오류가 발생하였습니다.');
-			myModal.modal();
-			}
-		}); // post방식으로 저 사이트에 post를 보내는데 json형식으로 입력한 값이 들어감
-
-	});
-});
-
 	<%-- 회원 가입이 실패한 경우 처리 추가 --%>
-	<%--
+	<%
+	if ("error".equals(request.getAttribute("msg"))) {
+	%>
 		var myModal = $('#myModal');
 		myModal.find('.modal-title').text('Sign Up Error');
 		myModal.find('.modal-body').text('회원 가입 시 오류가 발생하였습니다.');
 		myModal.modal();
-	--%>
+	<% } %>
 </script>
 
 </body>
